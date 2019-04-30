@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Input } from '../../ui/Input';
-import { RedButton } from '../../ui/RedButton';
+import { Input } from 'src/components/ui/Input';
+import { RedButton } from 'src/components/ui/RedButton';
 
 interface State {
   email: string;

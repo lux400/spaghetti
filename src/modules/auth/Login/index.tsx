@@ -4,7 +4,7 @@ import { gql } from 'apollo-boost';
 import { RouteComponentProps } from 'react-router-dom';
 
 const USERS = gql`
-  query {
+  query USERS {
     users {
       id
       email
@@ -14,7 +14,9 @@ const USERS = gql`
   }
 `;
 
-export class LoginView extends React.PureComponent<RouteComponentProps<{}>> {
+export default class Login extends React.PureComponent<
+  RouteComponentProps<{}>
+> {
   render() {
     console.log(USERS);
     return (
