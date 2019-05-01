@@ -1,11 +1,11 @@
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost';
 
 export const usersQuery = gql`
   query USERS {
     users {
-      id,
-      email,
-      firstName,
+      id
+      email
+      firstName
       lastName
     }
   }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Query } from 'react-apollo';
+import { Query, withApollo } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -14,14 +14,17 @@ const USERS = gql`
   }
 `;
 
-export default class Login extends React.PureComponent<
-  RouteComponentProps<{}>
-> {
+interface Props extends RouteComponentProps {
+  client: any
+}
+
+class Login extends React.PureComponent<Props> {
   render() {
     console.log(USERS);
     return (
       <Query query={USERS}>
         {(lul: any) => {
+          console.log(lul);
           if (lul.loading) return 'Loading...';
           if (lul.error) return `Error! ${lul.error.message}`;
           console.log(lul);
@@ -37,3 +40,5 @@ export default class Login extends React.PureComponent<
     );
   }
 }
+
+export default withApollo(Login as any);

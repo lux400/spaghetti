@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Mutation } from 'react-apollo';
+import { Mutation, withApollo } from 'react-apollo';
 import { RouteComponentProps } from 'react-router-dom';
 import { gql } from 'apollo-boost';
 import { RegisterMutationVariables, RegisterMutation } from 'src/schemaTypes';
@@ -13,10 +13,11 @@ const registerMutation = gql`
   }
 `;
 
-export default class SignUp extends React.PureComponent<
+class SignUp extends React.PureComponent<
   RouteComponentProps<{}>
 > {
   render() {
+    console.log(this.props);
     return (
       <Mutation<RegisterMutation, RegisterMutationVariables>
         mutation={registerMutation}
@@ -46,3 +47,5 @@ export default class SignUp extends React.PureComponent<
     );
   }
 }
+
+export default withApollo(SignUp as any);
