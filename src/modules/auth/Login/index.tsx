@@ -1,44 +1,50 @@
 import * as React from 'react';
-import { Query, withApollo } from 'react-apollo';
-import { gql } from 'apollo-boost';
-import { RouteComponentProps } from 'react-router-dom';
+import { useMutation } from 'react-apollo-hooks';
+import { useFormik } from 'formik';
+import { Input } from 'src/components/ui/Input';
+import { Button } from 'src/components/ui/Button';
+import {
+  loginMutation,
+  loggedInUserMutation,
+} from 'src/graphql/mutations/auth';
 
-const USERS = gql`
-  query USERS {
-    users {
-      id
-      email
-      firstName
-      lastName
-    }
-  }
-`;
+export default () => {
+  const [logIn] = useMutation(loginMutation);
+  const [setLoggedInUser] = useMutation(loggedInUserMutation);
+  console.log(1);
+  const { values, handleChange, handleSubmit } = useFormik({
+    initialValues: { email: '', password: '' },
+    onSubmit: async values => {
+      const { data } = await logIn({
+        variables: values,
+        update: async (store, response: any) => {
+          await setLoggedInUser({ variables: { user: response.data.login } });
+        },
+      });
+    },
+  });
 
-interface Props extends RouteComponentProps {
-  client: any
-}
-
-class Login extends React.PureComponent<Props> {
-  render() {
-    console.log(USERS);
-    return (
-      <Query query={USERS}>
-        {(lul: any) => {
-          console.log(lul);
-          if (lul.loading) return 'Loading...';
-          if (lul.error) return `Error! ${lul.error.message}`;
-          console.log(lul);
-          return (
-            <div>
-              {lul.data.users.map((user: any, index: number) => {
-                return <div key={index}>{user.email}</div>;
-              })}
-            </div>
-          );
-        }}
-      </Query>
-    );
-  }
-}
-
-export default withApollo(Login as any);
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <Input
+          label="Email"
+          type="text"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          placeholder="Enter your email address..."
+        />
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          placeholder="Enter your password..."
+        />
+        <Button type="submit">Log in</Button>
+      </form>
+    </>
+  );
+};

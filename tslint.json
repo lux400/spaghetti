@@ -17,6 +17,7 @@
     "no-namespace": false,
     "jsx-no-lambda": false,
     "interface-name": false,
+    "no-shadowed-variable": false,
     "no-console": false,
     "member-access": [
       true,

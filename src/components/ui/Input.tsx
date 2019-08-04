@@ -14,6 +14,7 @@ const Container = styled('div')`
 `;
 
 const Label = styled('div')``;
+
 const StyledInput = styled('input')`
   outline: 0;
   border: 0;

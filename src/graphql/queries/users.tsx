@@ -10,3 +10,9 @@ export const usersQuery = gql`
     }
   }
 `;
+
+export const loggedInUser = gql`
+  query {
+    user @client
+  }
+`;

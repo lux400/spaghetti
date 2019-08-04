@@ -1,7 +1,7 @@
 import * as styledComponents from 'styled-components';
 import { ThemedStyledComponentsModule } from 'styled-components';
 
-import { StyleClosetTheme } from './theme';
+import { StyleClosetTheme, theme } from './theme';
 
 const {
   default: styled,
@@ -11,5 +11,5 @@ const {
   ThemeProvider,
 } = styledComponents as ThemedStyledComponentsModule<StyleClosetTheme>;
 
-export { css, createGlobalStyle, keyframes, ThemeProvider };
+export { css, createGlobalStyle, keyframes, ThemeProvider, theme };
 export default styled;

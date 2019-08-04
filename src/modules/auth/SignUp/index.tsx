@@ -1,51 +1,51 @@
 import * as React from 'react';
-import { Mutation, withApollo } from 'react-apollo';
-import { RouteComponentProps } from 'react-router-dom';
+import { useApolloClient, useMutation } from 'react-apollo-hooks';
 import { gql } from 'apollo-boost';
-import { RegisterMutationVariables, RegisterMutation } from 'src/schemaTypes';
-import { Form } from './components/Form';
+import { useFormik } from 'formik';
+import { Input } from 'src/components/ui/Input';
+import { Button } from 'src/components/ui/Button';
+import { registerMutation } from 'src/graphql/mutations/auth';
 
-const registerMutation = gql`
-  mutation RegisterMutation($email: String!, $password: String!) {
-    register(email: $email, password: $password) {
-      email
-    }
-  }
-`;
 
-class SignUp extends React.PureComponent<
-  RouteComponentProps<{}>
-> {
-  render() {
-    console.log(this.props);
-    return (
-      <Mutation<RegisterMutation, RegisterMutationVariables>
-        mutation={registerMutation}
-      >
-        {(mutate) => (
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Form
-              buttonText="register"
-              onSubmit={async (data) => {
-                const response = await mutate({
-                  variables: data,
-                });
-                console.log(response);
-                this.props.history.push('/login');
-              }}
-            />
-          </div>
-        )}
-      </Mutation>
-    );
-  }
-}
 
-export default withApollo(SignUp as any);
+export default () => {
+  const [signUp, { error }] = useMutation(registerMutation);
+  const client = useApolloClient();
+
+  const { values, handleChange, handleSubmit } = useFormik({
+    initialValues: { email: '', password: '' },
+    onSubmit: async values => {
+      const { data } = await signUp({
+        variables: values,
+        update: (store, { data }) => {
+          store.writeData({ data: { user: data } });
+        },
+      });
+    },
+  });
+
+  return (
+    <>
+
+      <form onSubmit={handleSubmit}>
+        <Input
+          label="Email"
+          type="text"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          placeholder="Enter your email address..."
+        />
+        <Input
+          label="Password"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          placeholder="Enter your password..."
+        />
+        <Button type="submit">Sign up</Button>
+      </form>
+    </>
+  );
+};

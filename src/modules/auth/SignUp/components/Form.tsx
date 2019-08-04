@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Input } from 'src/components/ui/Input';
-import { RedButton } from 'src/components/ui/RedButton';
+import { Button } from 'src/components/ui/Button';
 
 interface State {
   email: string;
@@ -29,7 +29,7 @@ export class Form extends React.PureComponent<Props, State> {
     const { password, email } = this.state;
 
     return (
-      <div>
+      <>
         <Input
           label="Email"
           type="text"
@@ -46,10 +46,10 @@ export class Form extends React.PureComponent<Props, State> {
           value={password}
           onChange={this.handleChange}
         />
-        <RedButton onClick={() => this.props.onSubmit(this.state)}>
+        <Button onClick={() => this.props.onSubmit(this.state)}>
           {this.props.buttonText}
-        </RedButton>
-      </div>
+        </Button>
+      </>
     );
   }
 }
