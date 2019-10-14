@@ -16,8 +16,3 @@ export const loginMutation = gql`
   }
 `;
 
-export const loggedInUserMutation = gql`
-  mutation($user: Object!) {
-    setloggedInUser(user: $user) @client
-  }
-`;
