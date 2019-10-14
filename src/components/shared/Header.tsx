@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useApolloClient } from 'react-apollo-hooks';
+import { useApolloClient } from '@apollo/react-hooks';
 
 export const Header = () => {
     const client = useApolloClient();

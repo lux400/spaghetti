@@ -35,5 +35,9 @@
     "webpack",
     "jest",
     "src/setupTests.ts"
+  ],
+  "typeRoots": [
+    "./src/types",
+    "./node_modules/@types"
   ]
 }

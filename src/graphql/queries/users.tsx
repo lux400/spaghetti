@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 export const usersQuery = gql`
-  query USERS {
+  query Users {
     users {
       id
       email
@@ -12,7 +12,10 @@ export const usersQuery = gql`
 `;
 
 export const loggedInUser = gql`
-  query {
-    user @client
+  query LoggedInUser {
+    loggedInUser @client {
+      id
+      email
+    }
   }
 `;

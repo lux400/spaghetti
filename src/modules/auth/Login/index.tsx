@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import { Input } from 'src/components/ui/Input';
 import { Button } from 'src/components/ui/Button';
@@ -11,14 +11,18 @@ import {
 export default () => {
   const [logIn] = useMutation(loginMutation);
   const [setLoggedInUser] = useMutation(loggedInUserMutation);
-  console.log(1);
+
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: { email: '', password: '' },
     onSubmit: async values => {
       const { data } = await logIn({
         variables: values,
         update: async (store, response: any) => {
-          await setLoggedInUser({ variables: { user: response.data.login } });
+          await setLoggedInUser({
+            variables: {
+              user: response.data.login,
+            },
+          });
         },
       });
     },

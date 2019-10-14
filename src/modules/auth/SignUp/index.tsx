@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useApolloClient, useMutation } from 'react-apollo-hooks';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { useFormik } from 'formik';
 import { Input } from 'src/components/ui/Input';
 import { Button } from 'src/components/ui/Button';
 import { registerMutation } from 'src/graphql/mutations/auth';
-
-
 
 export default () => {
   const [signUp, { error }] = useMutation(registerMutation);

@@ -1,7 +1,7 @@
 export default {
   Mutation: {
-    setloggedInUser: (_, { user }, { cache }) => {
-      cache.writeData({ data: { user } });
+    setLoggedInUser: (_, { user }, { cache }) => {
+      cache.writeData({ data: { loggedInUser: user } });
       return user;
     },
   },
